@@ -17,9 +17,9 @@ type snakeBody struct {
 }
 
 var (
-	speed  = flag.Duration("speed", 25*time.Millisecond, "speed of matrix")
+	speed  = flag.Duration("speed", 10*time.Millisecond, "speed of matrix")
 	symbol = flag.String("symbol", "$", "symbol of fire")
-	isBG   = flag.Bool("bg", true, "use background color")
+	isBG   = flag.Bool("bg", false, "use background color")
 	limit  = flag.Int("limit", 100, "limit of snake's length")
 	radius = flag.Int("radius", 3, "radius of blur")
 
