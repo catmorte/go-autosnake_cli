@@ -99,26 +99,30 @@ func main() {
 
 		for y := yl - 1; y >= 0; y-- {
 			for x := xl - 1; x >= 0; x-- {
-				tm.MoveCursor(x, y)
 				val := field[y][x] * 255
 				if val > 255 {
 					val = 255
+				}
+				tm.MoveCursor(x, y)
+				if val < 10 {
+					tm.Print(sparkColorizer(0, 0, 0))
+					continue
 				}
 				tm.Print(sparkColorizer(0, uint8(val), 0))
 			}
 		}
 
-		tm.Flush()
 		for i := -*radius; i <= *radius; i++ {
 			for j := -*radius; j <= *radius; j++ {
 				if appleX+i >= 0 && appleX+i < xl && appleY+j >= 0 && appleY+j < yl {
 					blurX, blurY := appleX+i, appleY+j
-					tm.MoveCursor(blurX, blurY)
-					if field[blurY][blurX] > 0 {
+					blur := blurMatrix[*radius+i][*radius+j]
+					val := uint8(255 * blur)
+					if val < 70 {
 						continue
 					}
-					val := blurMatrix[*radius+i][*radius+j]
-					tm.Print(sparkColorizer(uint8(255*val), 0, 0))
+					tm.MoveCursor(blurX, blurY)
+					tm.Print(sparkColorizer(val, 0, 0))
 				}
 			}
 		}
